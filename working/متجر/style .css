@@ -1,0 +1,438 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(120deg, #0f1624 0%, #232946 100%);
+  color: #fff;
+}
+
+header {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px 0 32px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  background: none;
+  /* ضع شعارك هنا */
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.nav li a:hover {
+  color: #a3a8f0;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.icon-user, .icon-cart {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: #fff2;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-size: 1.1rem;
+}
+
+.icon-user::before { content: "👤"; }
+.icon-cart::before { content: "🛒"; }
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 32px 0 32px;
+  min-height: 340px;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-welcome {
+  color: #a3a8f0;
+  font-family: 'Fira Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.hero-brand {
+  color: #fff;
+  font-family: 'Fira Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.hero-desc {
+  margin: 18px 0 32px 0;
+  font-size: 1.18rem;
+  color: #eaeaea;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.btn-hero {
+  display: inline-block;
+  background: #181c2b;
+  color: #fff;
+  padding: 12px 32px;
+  border-radius: 22px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.btn-hero:hover {
+  background: #a3a8f0;
+  color: #232946;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 320px;
+  min-height: 320px;
+  position: relative;
+}
+
+.hero-right .carousel-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #fff3;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background 0.2s;
+}
+
+.dot.active {
+  background: #fff;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #3a3f5a;
+  margin: 48px 0 32px 0;
+}
+
+.shop {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.shop h2 {
+  font-size: 2.1rem;
+  font-family: 'Fira Mono', monospace;
+  margin-bottom: 24px;
+}
+
+.shop-cards {
+  display: flex;
+  gap: 28px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.shop-card {
+  background: #181c2b;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 300px;
+  padding: 24px 18px 20px 18px;
+  box-shadow: 0 2px 12px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shop-img {
+  width: 140px;
+  height: 140px;
+  background: #232946;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  /* ضع صورة المنتج هنا */
+}
+
+.shop-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.shop-price {
+  color: #a3a8f0;
+  font-size: 1.08rem;
+  margin-bottom: 14px;
+}
+
+.btn-shop {
+  background: #0f1624;
+  color: #fff;
+  padding: 8px 28px;
+  border-radius: 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-shop:hover {
+  background: #a3a8f0;
+  color: #232946;
+}
+
+.about {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.about-left {
+  flex: 2;
+}
+
+.about h2 {
+  font-size: 2.1rem;
+  font-family: 'Fira Mono', monospace;
+  margin-bottom: 12px;
+}
+
+.about-us {
+  font-family: 'Fira Mono', monospace;
+  font-weight: 700;
+}
+
+.about-desc {
+  font-size: 1.08rem;
+  color: #eaeaea;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.about-sets-title {
+  font-family: 'Fira Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.about-features {
+  display: flex;
+  gap: 38px;
+  margin-top: 18px;
+}
+
+.feature {
+  text-align: center;
+  min-width: 100px;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.feature-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.feature-desc {
+  font-size: 0.92rem;
+  color: #bfc3e6;
+}
+
+.about-right {
+  flex: 1;
+  min-width: 220px;
+  min-height: 220px;
+  background: #232946;
+  border-radius: 18px;
+  margin-top: 12px;
+  /* ضع صورة التيشيرت والشورت والحذاء هنا */
+}
+
+.contact {
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 0 32px;
+}
+
+.contact h2 {
+  font-size: 2.1rem;
+  font-family: 'Fira Mono', monospace;
+  margin-bottom: 10px;
+}
+
+.contact-desc {
+  font-size: 1.08rem;
+  color: #eaeaea;
+  margin-bottom: 24px;
+}
+
+.contact-content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 250px;
+}
+
+.contact-block {
+  margin-bottom: 22px;
+}
+
+.contact-label {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.contact-value {
+  font-size: 1.08rem;
+  color: #a3a8f0;
+}
+
+.contact-social {
+  display: flex;
+  gap: 18px;
+  margin-top: 18px;
+  font-size: 1.5rem;
+}
+
+.icon-social {
+  background: #181c2b;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.icon-social:hover {
+  background: #a3a8f0;
+  color: #232946;
+}
+
+.contact-form {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: #181c2b;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 1rem;
+  resize: none;
+  margin-bottom: 0;
+}
+
+.contact-form textarea {
+  min-height: 70px;
+  max-height: 120px;
+}
+
+.contact-form button {
+  background: #232946;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.contact-form button:hover {
+  background: #a3a8f0;
+  color: #232946;
+}
+
+@media (max-width: 900px) {
+  .hero, .about, .contact-content, .shop-cards {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .about-right, .hero-right {
+    margin: 30px 0 0 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 180px;
+  }
+  nav {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
