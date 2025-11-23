@@ -1,4 +1,4 @@
-//1
+   /*//1
 var light = "green"
 
  if (light == "green") {
@@ -39,6 +39,7 @@ var light = "green"
     streetsmarts : 30,
     health : 40, 
    }
+    console.log(assistantManager);
 
    //6 
    var Name = " hello ";
@@ -49,26 +50,54 @@ var light = "green"
    console.log(Name.concat(user));
 
    //7
-   var shoes = 100;
+
+   var shoes = 150;
    var statetax = 1.2;
 
    function totalprice (shoes,tax){
     return shoes * tax;
    }
-   var topay = totalprice (shoes,statetax);
-
+      var topay = totalprice (shoes,statetax);
+ 
    console.log(topay);
 
-  
    //8 
 
    var purchase1 = {
-    shoes: 100,
+    shoes: 150,
     statetax: 1.2,
     totalprice: function(){
       var calcu = purchase1.shoes * purchase1.statetax;
-       console.log(purchase1);
+      return calcu;
     }
    }
- 
-   //9
+  console.log(purchase1.totalprice());
+
+
+   switch(light) {
+   case 'green':
+       console.log("Drive");
+       break;
+   case 'orange':
+       console.log("Get ready");
+       break;
+   case 'red':
+       console.log("Don't drive");
+       break;
+   default:
+       //this block will run if no condition matches
+       console.log('The light is not green, orange, or red');
+}
+*/
+
+//10
+function listArrayItems(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        console.log(i, arr[i])
+    }
+}
+var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+listArrayItems(colors);
+
+var name = ['ab', 'ad', 'ee', 'rr'];
+listArrayItems(name);
