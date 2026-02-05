@@ -1,0 +1,12 @@
+git add .
+
+
+git commit -m "Add project files"
+
+
+git push -u origin main
+
+
+git log --oneline
+
+
