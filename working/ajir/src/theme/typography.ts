@@ -1,16 +1,14 @@
 export const typography = {
-  title: {
-    fontFamily: 'ReadexPro',
-    fontSize: 22,
+  elmessiri: {
+    fontFamily: 'ElMessiri',
   },
 
-  paragraph: {
-    fontFamily: 'ElMessiri',
-    fontSize: 14,
+  readexpro: {
+    fontFamily: 'ReadexPro',
   },
 
   quran: {
     fontFamily: 'AmiriQuran',
-    fontSize: 18,
   },
+
 };

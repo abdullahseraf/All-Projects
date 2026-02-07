@@ -2,16 +2,16 @@ import { COLORS } from '../constants/colors';
 import { AppTheme } from './theme.type';
 
 export const lightTheme: AppTheme = {
-  background: COLORS.f,
-  card: COLORS.h3,
+  background: COLORS.white,
+  card: COLORS.white,
 
-  title: COLORS.h1,
-  text: COLORS.h2,
-  paragraph: COLORS.p,
+  title: COLORS.titleLight,
+  text: COLORS.textLight,
+  paragraph: COLORS.paragraphLight,
 
-  primary: COLORS.second,
-  secondary: COLORS.c3,
-  accent: COLORS.c4,
+  primary: COLORS.accent,
+  secondary: COLORS.soft,
+  accent: COLORS.accent,
 
-  white: COLORS.f,
+  white: COLORS.white,
 };

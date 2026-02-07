@@ -1,17 +1,18 @@
 export const COLORS = {
-  second: '#1B263B',
-  c3: '#415A77',
-  c4: '#778DA9',
+  // Primary blues (from design)
+  primary: '#0D1B2A',     // الخلفية الرئيسية
+  secondary: '#1B263B',   // الكروت
+  accent: '#415A77',      // أزرار / عناصر بارزة
+  soft: '#778DA9',        // نص ثانوي / أيقونات
 
-  h8: '#0F172A',
-  h10: '#19233C',
-  h9: '#24344D',
+  // Text colors
+  titleDark: '#E0E1DD',
+  textDark: '#C7CBD1',
+  paragraphDark: '#9AA4B2',
 
-  h1: '#212529',
-  h2: '#6C757D',
-  h3: '#E4ECF5',
-  h4: '#B6B6B6',
-  p:  '#909090',
+  titleLight: '#0D1B2A',
+  textLight: '#415A77',
+  paragraphLight: '#6B7280',
 
-  f:  '#FFFFFF',
+  white: '#FFFFFF',
 } as const;

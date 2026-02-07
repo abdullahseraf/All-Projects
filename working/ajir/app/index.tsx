@@ -1,16 +1,21 @@
+import { COLORS } from "@/src/constants/colors";
 import { typography } from "@/src/theme/typography";
 import { useFonts } from "expo-font";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { darkTheme } from "../src/theme/dark";
-
 export default function Index() {
   const [fontsLoaded] = useFonts({
-    ReadexPro: require("../src/assets/fonts/ReadexPro-Medium.ttf"),
-    ElMessiri: require("../src/assets/fonts/ElMessiri-Medium.ttf"),
-    AmiriQuran: require("../src/assets/fonts/AmiriQuran-Regular.ttf"),
+    ElMessiri: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
+    ReadexPro: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
+    AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
   });
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded)
+    return (
+      <View>
+        <Text>Loading fonts...</Text>
+      </View>
+    );
 
   return (
     <View
@@ -21,13 +26,61 @@ export default function Index() {
         backgroundColor: darkTheme.background,
       }}
     >
-      <Text style={[typography.title, { padding: 10, fontSize: 28, color: darkTheme.secondary }]}>أجر</Text>
-            <Text style={ [typography.quran, { padding: 10, borderRadius: 10, backgroundColor: darkTheme.primary, color: darkTheme.accent }] }>
-         إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا 
-      </Text>
-            <Text style={[typography.paragraph, { padding: 10, color: darkTheme.title }]}>
-        تتبع الصلوات اليومية
-      </Text>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text
+          style={[
+            typography.elmessiri,
+            { padding: 10, fontSize: 40, color: darkTheme.title },
+          ]}
+        >
+          <Text
+            style={[typography.elmessiri, { fontSize: 40, color: COLORS.soft }]}
+          >
+            أ
+          </Text>
+          جر
+        </Text>
+        <Text
+          style={[
+            typography.quran,
+            {
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingBottom: 5,
+              borderRadius: 10,
+              fontSize: 20,
+              backgroundColor: darkTheme.cardAlt,
+              color: darkTheme.accent,
+            },
+          ]}
+        >
+          إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا
+        </Text>
+        <Pressable onPress={() => alert("تتبع الصلوات اليومية")}>
+          <Text
+            style={[
+              typography.readexpro,
+              { paddingTop: 10, fontSize: 18, color: COLORS.soft },
+            ]}
+          >
+            تتبع الصلوات اليومية
+          </Text>
+        </Pressable>
+      </View>
+      <View style={{ paddingBottom: 20 }}>
+        <Text
+          style={[
+            typography.readexpro,
+            {
+              fontSize: 15,
+              color: darkTheme.text,
+            },
+          ]}
+        >
+          made by{" "}
+          <Text style={{ color: darkTheme.secondary }}> @abdullahSeraf </Text>
+        </Text>
+      </View>
     </View>
   );
 }
