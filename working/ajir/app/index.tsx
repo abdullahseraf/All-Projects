@@ -5,8 +5,14 @@ import { Pressable, Text, View } from "react-native";
 import { darkTheme } from "../src/theme/dark";
 export default function Index() {
   const [fontsLoaded] = useFonts({
-    ElMessiri: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
-    ReadexPro: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
+    ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
+    ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
+    ElMessiriSemiBold: require("@/src/assets/fonts/ElMessiri-SemiBold.ttf"),
+    ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
+    ReadexProRegular: require("@/src/assets/fonts/ReadexPro-Regular.ttf"),
+    ReadexProMedium: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
+    ReadexProSemiBold: require("@/src/assets/fonts/ReadexPro-SemiBold.ttf"),
+    ReadexProBold: require("@/src/assets/fonts/ReadexPro-Bold.ttf"),
     AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
   });
 
@@ -29,12 +35,12 @@ export default function Index() {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text
           style={[
-            typography.elmessiri,
+            typography.elmessiriBold,
             { padding: 10, fontSize: 40, color: darkTheme.title },
           ]}
         >
           <Text
-            style={[typography.elmessiri, { fontSize: 40, color: COLORS.soft }]}
+            style={ { fontSize: 40, color: COLORS.soft }}
           >
             أ
           </Text>
@@ -59,8 +65,8 @@ export default function Index() {
         <Pressable onPress={() => alert("تتبع الصلوات اليومية")}>
           <Text
             style={[
-              typography.readexpro,
-              { paddingTop: 10, fontSize: 18, color: COLORS.soft },
+              typography.readexproRegular,
+              { paddingTop: 5, fontSize: 18, color: COLORS.soft },
             ]}
           >
             تتبع الصلوات اليومية
@@ -70,7 +76,7 @@ export default function Index() {
       <View style={{ paddingBottom: 20 }}>
         <Text
           style={[
-            typography.readexpro,
+            typography.readexproBold,
             {
               fontSize: 15,
               color: darkTheme.text,

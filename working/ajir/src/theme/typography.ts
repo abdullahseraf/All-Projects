@@ -1,10 +1,34 @@
 export const typography = {
-  elmessiri: {
-    fontFamily: 'ElMessiri',
+  elmessiriRegular: {
+    fontFamily: 'ElMessiriRegular',
   },
 
-  readexpro: {
-    fontFamily: 'ReadexPro',
+  elmessiriMedium: {
+    fontFamily: 'ElMessiriMedium',
+  },
+
+  elmessiriSemiBold: {
+    fontFamily: 'ElMessiriSemiBold',
+  },
+
+  elmessiriBold: {
+    fontFamily: 'ElMessiriBold',
+  },
+
+  readexproRegular: {
+    fontFamily: 'ReadexProRegular',
+  },
+
+  readexproMedium: {
+    fontFamily: 'ReadexProMedium',
+  },
+
+  readexproSemiBold: {
+    fontFamily: 'ReadexProSemiBold',
+  },
+
+  readexproBold: {
+    fontFamily: 'ReadexProBold',
   },
 
   quran: {
