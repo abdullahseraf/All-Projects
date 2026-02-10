@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "اجر",
+    "name": "أجر",
     "slug": "ajir",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,8 +12,8 @@
       "supportsTablet": true
     },
     "android": {
+      "userInterfaceStyle": "automatic",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
         "foregroundImage": "./src/assets/images/Group 8-1.png",
         "backgroundImage": "./src/assets/images/Group 8-1.png",
         "monochromeImage": "./src/assets/images/Group 8-1.png"
@@ -32,11 +32,11 @@
         "expo-splash-screen",
         {
           "image": "./src/assets/images/Group 8-1.png",
-          "imageWidth": 200,
+          "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "0F172A"
           }
         }
       ],

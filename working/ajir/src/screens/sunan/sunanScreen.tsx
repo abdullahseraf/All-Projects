@@ -1,9 +1,10 @@
-import { COLORS } from "@/src/constants/colors";
 import { typography } from "@/src/theme/typography";
 import { useFonts } from "expo-font";
 import { Pressable, Text, View } from "react-native";
-import { darkTheme } from "../src/theme/dark";
-export default function Index() {
+import { useTheme } from "@/src/theme/ThemeContext";
+
+export default function SunanScreen() {
+  const { theme } = useTheme();
   const [fontsLoaded] = useFonts({
     ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
     ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
@@ -23,27 +24,51 @@ export default function Index() {
       </View>
     );
 
+
   return (
     <View
       style={{
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: darkTheme.background,
+        backgroundColor: theme.background,
       }}
     >
+      <View
+        style={{
+          width: "100%",
+          height: 100,
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 50,
+          backgroundColor: theme.Header,
+        }}
+      >
+        <Text
+          style={[
+            typography.elmessiriBold,
+            {
+              paddingRight: 35,
+              paddingBottom: 15,
+              fontSize: 20,
+              color: theme.cTitle,
+            },
+          ]}
+        >
+          السنن
+        </Text>
+      </View>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text
           style={[
             typography.elmessiriBold,
-            { padding: 10, fontSize: 40, color: darkTheme.title },
+            { padding: 10, fontSize: 40, color: theme.logoJ },
           ]}
         >
-          <Text
-            style={ { fontSize: 40, color: COLORS.soft }}
-          >
-            أ
-          </Text>
+          <Text style={{ fontSize: 40, color: theme.logoA }}>أ</Text>
           جر
         </Text>
         <Text
@@ -55,8 +80,8 @@ export default function Index() {
               paddingBottom: 5,
               borderRadius: 10,
               fontSize: 20,
-              backgroundColor: darkTheme.cardAlt,
-              color: darkTheme.accent,
+              backgroundColor: theme.card,
+              color: theme.cText,
             },
           ]}
         >
@@ -65,26 +90,26 @@ export default function Index() {
         <Pressable onPress={() => alert("تتبع الصلوات اليومية")}>
           <Text
             style={[
-              typography.readexproRegular,
-              { paddingTop: 5, fontSize: 18, color: COLORS.soft },
+              typography.readexproSemiBold,
+              { paddingTop: 5, fontSize: 18, color: theme.cText },
             ]}
           >
-            تتبع الصلوات اليومية
+            تتبع سنن اليومية
           </Text>
         </Pressable>
       </View>
       <View style={{ paddingBottom: 20 }}>
         <Text
           style={[
-            typography.readexproBold,
+            typography.readexproRegular,
             {
               fontSize: 15,
-              color: darkTheme.text,
+              color: theme.Navİcon,
             },
           ]}
         >
           made by{" "}
-          <Text style={{ color: darkTheme.secondary }}> @abdullahSeraf </Text>
+          <Text style={{ color: theme.NavActive }}> @abdullahSeraf </Text>
         </Text>
       </View>
     </View>

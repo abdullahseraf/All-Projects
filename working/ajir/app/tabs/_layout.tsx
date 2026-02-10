@@ -1,0 +1,105 @@
+import { darkTheme } from "@/src/theme/dark";
+import { typography } from "@/src/theme/typography";
+import { Ionicons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
+import { Tabs } from "expo-router";
+import { Text, View } from "react-native";
+
+export default function TabsLayout() {
+  const [fontsLoaded] = useFonts({
+    ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) return null;
+
+  const renderTab = (
+    icon: any,
+    iconOutline: any,
+    label: string,
+    color: string,
+    focused: boolean
+  ) => (
+    <View
+      style={{
+        width: 74,
+        height: 52,
+        borderRadius: 12,
+        backgroundColor: focused ? darkTheme.NavActive : "transparent",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
+      }}
+    >
+      <Ionicons
+        name={focused ? icon : iconOutline}
+        size={22}
+        color={color}
+      />
+
+      {focused && (
+        <Text
+          style={[
+            typography.elmessiriBold,
+            {
+              fontSize: 10,
+              color,
+            },
+          ]}
+        >
+          {label}
+        </Text>
+      )}
+    </View>
+  );
+
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: darkTheme.Header,
+          height: 85,
+          paddingTop: 22,
+          paddingBottom: 10,
+          borderTopWidth: 1,
+          borderTopColor: darkTheme.cardAlt,
+        },
+        tabBarActiveTintColor: darkTheme.cText,
+        tabBarInactiveTintColor: darkTheme.Navİcon,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          tabBarIcon: ({ color, focused }) =>
+            renderTab("home", "home-outline", "الرئيسية", color, focused),
+        }}
+      />
+
+      <Tabs.Screen
+        name="prayers"
+        options={{
+          tabBarIcon: ({ color, focused }) =>
+            renderTab("time", "time-outline", "الصلوات", color, focused),
+        }}
+      />
+
+      <Tabs.Screen
+        name="sunan"
+        options={{
+          tabBarIcon: ({ color, focused }) =>
+            renderTab("book", "book-outline", "السنن", color, focused),
+        }}
+      />
+
+      <Tabs.Screen
+        name="settings"
+        options={{
+          tabBarIcon: ({ color, focused }) =>
+            renderTab("settings", "settings-outline", "الإعدادات", color, focused),
+        }}
+      />
+    </Tabs>
+  );
+}

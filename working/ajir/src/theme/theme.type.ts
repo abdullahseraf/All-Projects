@@ -1,15 +1,19 @@
 export interface AppTheme {
-  background: string;
-  card: string;
-  cardAlt?: string;
+    // Backgrounds
+    background: string;
+    logoJ: string;
+    logoA: string;
+    İntrotB: string;
+    İnputT: string;
+    İnputB: string;
+    Header: string;
 
-  title: string;
-  text: string;
-  paragraph: string;
-
-  primary: string;
-  secondary: string;
-  accent: string;
-
-  white: string;
+    // same as light for consistency
+    card: string;
+    cardAlt: string;
+    cTitle: string;
+    cText: string;
+    cParagraph: string;
+    Navİcon: string;
+    NavActive: string;
 }
