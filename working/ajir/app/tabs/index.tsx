@@ -1,5 +1,5 @@
 import HomeScreen from "@/src/screens/Home/HomeScreen";
 
-export default function Index() {
+export default function Prayers() {
   return <HomeScreen />;
 }
