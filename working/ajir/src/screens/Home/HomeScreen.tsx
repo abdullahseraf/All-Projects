@@ -6,6 +6,13 @@ import { ScrollView, Text, View } from "react-native";
 
 export default function Index() {
   const { theme } = useTheme();
+  const prayers = [
+    { name: "العشاء", time: "4 : 05" },
+    { name: "المغرب", time: "4 : 05" },
+    { name: "العصر", time: "4 : 05" },
+    { name: "الظهر", time: "4 : 05" },
+    { name: "الفجر", time: "4 : 05" },
+  ];
   const [fontsLoaded] = useFonts({
     ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
     ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
@@ -26,24 +33,20 @@ export default function Index() {
     );
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
-        backgroundColor: theme.background,
-      }}
+    <ScrollView
+      style={{ flex: 1, backgroundColor: theme.background }}
+      contentContainerStyle={{ paddingBottom: 40 }}
+      showsVerticalScrollIndicator={false}
     >
       <StatusBar style="light" backgroundColor={theme.Header} />
+
+      {/* Header */}
       <View
         style={{
           width: "100%",
           height: 100,
           alignItems: "flex-end",
           justifyContent: "flex-end",
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          borderBottomLeftRadius: 0,
           borderBottomRightRadius: 50,
           backgroundColor: theme.Header,
         }}
@@ -62,10 +65,13 @@ export default function Index() {
           الرئيسية
         </Text>
       </View>
+
+      {/* Section Title */}
       <View
         style={{
           height: 50,
           width: "90%",
+          alignSelf: "center",
           alignItems: "center",
           justifyContent: "space-between",
           flexDirection: "row",
@@ -82,6 +88,7 @@ export default function Index() {
         >
           لرؤية المزيد
         </Text>
+
         <Text
           style={[
             typography.elmessiriBold,
@@ -94,356 +101,173 @@ export default function Index() {
           توقيت الصلاة
         </Text>
       </View>
+
+      {/* Horizontal Prayer Cards */}
       <ScrollView
-        style={{
-          width: "100%",
-          height: 100,
-        }}
         horizontal
         showsHorizontalScrollIndicator={false}
         overScrollMode="never"
         contentContainerStyle={{
-          flexDirection: "row",
+          paddingHorizontal: 15,
+          gap: 20,
+        }}
+      >
+        {prayers.map((prayer, index) => (
+          <View
+            key={index}
+            style={{
+              height: 100,
+              width: 150,
+              backgroundColor: theme.card,
+              borderRadius: 12,
+            }}
+          >
+            <View
+              style={{
+                height: 35,
+                backgroundColor: theme.cardAlt,
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={[
+                  typography.elmessiriMedium,
+                  { fontSize: 14, color: theme.cTitle },
+                ]}
+              >
+                {prayer.name}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={[
+                  typography.elmessiriSemiBold,
+                  { fontSize: 16, color: theme.cText },
+                ]}
+              >
+                موعد الصلاة
+              </Text>
+
+              <Text
+                style={[
+                  typography.readexproMedium,
+                  { fontSize: 16, color: theme.cTitle },
+                ]}
+              >
+                {prayer.time}
+              </Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Sunnah Card */}
+      <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingHorizontal: 15,
+          paddingVertical: 20,
+        }}
+      >
+        {" "}
+        <View
+          style={{
+            height: 200,
+            backgroundColor: theme.card,
+            borderRadius: 15,
+            justifyContent: "flex-end",
+          }}
+        >
+          {" "}
+          <View
+            style={{ alignItems: "flex-end", marginBottom: 6, marginRight: 15 }}
+          >
+            {" "}
+            <Text
+              style={[
+                typography.elmessiriSemiBold,
+                { fontSize: 20, color: theme.cTitle },
+              ]}
+            >
+              {" "}
+              سنة مهجورة{" "}
+            </Text>{" "}
+          </View>{" "}
+          <View
+            style={{
+              width: "100%",
+              height: 155,
+              backgroundColor: theme.cardAlt,
+              borderRadius: 15,
+              alignItems: "flex-end",
+              justifyContent: "flex-start",
+              paddingTop: 15,
+              paddingRight: 20,
+            }}
+          >
+            {" "}
+            <Text
+              style={[
+                typography.elmessiriSemiBold,
+                { color: theme.cText, fontSize: 16 },
+              ]}
+            >
+              {" "}
+              التَّنفس عند الشُّرب خارج الإناء ثلاثاً:{" "}
+            </Text>{" "}
+            <Text
+              style={[
+                typography.elmessiriSemiBold,
+                {
+                  color: theme.cParagraph,
+                  fontSize: 15,
+                  textAlign: "right",
+                  paddingTop: 10,
+                  paddingLeft: 20,
+                  lineHeight: 30,
+                },
+              ]}
+            >
+              {" "}
+              عن أنسٍ رضي الله عنه قال: كان رسول الله صلَّى الله عليه وسلَّم
+              يتنفَّس في الشَّراب ثلاثاً ويقول:(إنَّه أروى، وأبرأ، وأمْرأ)متفق
+              عليه.{" "}
+            </Text>{" "}
+          </View>{" "}
+        </View>
+      </View>
+
+      {/* aded Card */}
+      <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingHorizontal: 15,
+          paddingVertical: 20,
         }}
       >
         <View
           style={{
-            width: "90%",
-            height: 100,
-            marginTop: 0,
-            flexDirection: "row",
-            gap: 15,
-            marginRight: 15,
-            marginLeft: 15,
+            height: "auto",
+            backgroundColor: theme.card,
+            borderRadius: 15,
+            justifyContent: "flex-end",
           }}
-        >
-          <View
-            style={{
-              height: 100,
-              width: 150,
-              backgroundColor: theme.card,
-              borderRadius: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 35,
-                backgroundColor: theme.cardAlt,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriMedium,
-                  {
-                    fontSize: 14,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                العشاء
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 2,
-                marginTop: "5%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriSemiBold,
-                  {
-                    fontSize: 16,
-                    color: theme.cText,
-                  },
-                ]}
-              >
-                موعد الصلاة
-              </Text>
-              <Text
-                style={[
-                  typography.readexproMedium,
-                  {
-                    fontSize: 16,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                4 : 05{" "}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 100,
-              width: 150,
-              backgroundColor: theme.card,
-              borderRadius: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 35,
-                backgroundColor: theme.cardAlt,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriMedium,
-                  {
-                    fontSize: 14,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                المغرب
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 2,
-                marginTop: "5%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriSemiBold,
-                  {
-                    fontSize: 16,
-                    color: theme.cText,
-                  },
-                ]}
-              >
-                موعد الصلاة
-              </Text>
-              <Text
-                style={[
-                  typography.readexproMedium,
-                  {
-                    fontSize: 16,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                4 : 05{" "}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 100,
-              width: 150,
-              backgroundColor: theme.card,
-              borderRadius: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 35,
-                backgroundColor: theme.cardAlt,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriMedium,
-                  {
-                    fontSize: 14,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                العصر
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 2,
-                marginTop: "5%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriSemiBold,
-                  {
-                    fontSize: 16,
-                    color: theme.cText,
-                  },
-                ]}
-              >
-                موعد الصلاة
-              </Text>
-              <Text
-                style={[
-                  typography.readexproMedium,
-                  {
-                    fontSize: 16,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                4 : 05{" "}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 100,
-              width: 150,
-              backgroundColor: theme.card,
-              borderRadius: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 35,
-                backgroundColor: theme.cardAlt,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriMedium,
-                  {
-                    fontSize: 14,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                الظهر
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 2,
-                marginTop: "5%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriSemiBold,
-                  {
-                    fontSize: 16,
-                    color: theme.cText,
-                  },
-                ]}
-              >
-                موعد الصلاة
-              </Text>
-              <Text
-                style={[
-                  typography.readexproMedium,
-                  {
-                    fontSize: 16,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                4 : 05{" "}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 100,
-              width: 150,
-              backgroundColor: theme.card,
-              borderRadius: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 35,
-                backgroundColor: theme.cardAlt,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriMedium,
-                  {
-                    fontSize: 14,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                الفجر
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 2,
-                marginTop: "5%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={[
-                  typography.elmessiriSemiBold,
-                  {
-                    fontSize: 16,
-                    color: theme.cText,
-                  },
-                ]}
-              >
-                موعد الصلاة
-              </Text>
-              <Text
-                style={[
-                  typography.readexproMedium,
-                  {
-                    fontSize: 16,
-                    color: theme.cTitle,
-                  },
-                ]}
-              >
-                4 : 05{" "}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </View>
+        ></View>
+      </View>
+    </ScrollView>
   );
 }
