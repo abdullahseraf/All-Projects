@@ -1,7 +1,7 @@
 export const COLORS = {
   // Primary colors from design system
   T8: "#0F172A", // rgb(15, 23, 42) - من token 8
-  secondary: "#1B263B", // rgb(27, 38, 59) - من token second
+  secondary: "#17243b", // rgb(27, 38, 59) - من token second
   T3: "#344C63",
   T4: "#778DA9", // rgb(119, 141, 169) - من token 4
 
