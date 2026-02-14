@@ -19,7 +19,7 @@ export const COLORS = {
   T9: "#24344D", // rgb(36, 52, 77) - token 9
 
   // Fixed colors
-  F: "#FFFFFF", // rgb(255, 255, 255) - من token f
+  F: "#ffffff", // rgb(255, 255, 255) - من token f
   black: "#000000",
   transparent: "transparent",
 } as const;

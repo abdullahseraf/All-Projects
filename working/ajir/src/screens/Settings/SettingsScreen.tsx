@@ -181,50 +181,6 @@ export default function SettingsScreen() {
           <View
             style={{
               backgroundColor: theme.cardAlt,
-              width: 60,
-              height: 28,
-              borderRadius: 5,
-              borderWidth: 1,
-              borderColor: theme.cText,
-              marginLeft: 25,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Ionicons
-              name="close"
-              size={22}
-              color={theme.cText}
-            ></Ionicons>
-          </View>
-          <Text
-            style={[
-              typography.elmessiriRegular,
-              {
-                color: theme.cTitle,
-                fontSize: 16,
-                marginRight: 25,
-              },
-            ]}
-          >
-            AR / EN تبديل الغة
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "90%",
-            height: 60,
-            backgroundColor: theme.card,
-            borderRadius: 10,
-            marginBottom: 20,
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexDirection: "row",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: theme.cardAlt,
               height: 28,
               borderRadius: 5,
               borderWidth: 1,

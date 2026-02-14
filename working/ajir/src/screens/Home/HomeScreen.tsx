@@ -52,6 +52,7 @@ export default function Index() {
         flexGrow: 1, // 🔥 مهم جداً
       }}
       showsVerticalScrollIndicator={false}
+      overScrollMode="never"
     >
       <StatusBar style="light" backgroundColor={theme.Header} />
 
@@ -117,6 +118,7 @@ export default function Index() {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
+          overScrollMode="never"
           contentContainerStyle={{
             paddingHorizontal: 15,
             gap: 15,
@@ -250,8 +252,8 @@ export default function Index() {
                 ]}
               >
                 عن أنسٍ رضي الله عنه قال: كان رسول الله صلَّى الله عليه وسلَّم
-                يتنفَّس في الشَّراب ثلاثاً ويقول: (إنَّه أروى، وأبرأ، وأمْرأ)
-                متفق عليه.
+                يتنفَّس في الشَّراب ثلاثاً ويقول: إنَّه أروى، وأبرأ، وأمْرأ متفق
+                عليه.
               </Text>
             </View>
           </View>
@@ -266,7 +268,6 @@ export default function Index() {
           flexDirection: "row",
         }}
       >
-        {" "}
         <View
           style={{
             flex: 1,
@@ -336,7 +337,7 @@ export default function Index() {
                 },
               ]}
             >
-              العدد :{" "}
+               العدد : 
               <Text
                 style={[
                   typography.readexproSemiBold,
@@ -345,7 +346,7 @@ export default function Index() {
                   },
                 ]}
               >
-                {clicks}
+                {" "+clicks}
               </Text>
             </Text>
             <View>
