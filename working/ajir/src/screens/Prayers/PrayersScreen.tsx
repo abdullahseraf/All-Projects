@@ -4,16 +4,43 @@ import { useFonts } from "expo-font";
 import { Pressable, ScrollView, StatusBar, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Prayer() {
   const { theme } = useTheme();
+  const router = useRouter();
 
   const prayer = [
-    { name: "الفجر", time: "4 : 05" },
-    { name: "الظهر", time: "4 : 05" },
-    { name: "العصر", time: "4 : 05" },
-    { name: "المغرب", time: "4 : 05" },
-    { name: "العشاء", time: "4 : 05" },
+    {
+      name: "الفجر",
+      route: "fajir",
+      time: "4 : 05",
+      image: require("@/src/assets/images/fajir.png"),
+    },
+    {
+      name: "الظهر",
+      time: "4 : 05",
+      route: "duhr",
+      image: require("@/src/assets/images/duhr.png"),
+    },
+    {
+      name: "العصر",
+      time: "4 : 05",
+      route: "asr",
+      image: require("@/src/assets/images/asr.png"),
+    },
+    {
+      name: "المغرب",
+      time: "4 : 05",
+      route: "mugrb",
+      image: require("@/src/assets/images/mgrb.png"),
+    },
+    {
+      name: "العشاء",
+      time: "4 : 05",
+      route: "isa",
+      image: require("@/src/assets/images/isa.png"),
+    },
   ];
 
   const [fontsLoaded] = useFonts({
@@ -84,6 +111,7 @@ export default function Prayer() {
           }}
         >
           <Pressable
+            onPress={() => router.push(`../tabs/prayers/${prayer.route}`)}
             style={{
               backgroundColor: theme.card,
               borderRadius: 15,
@@ -92,24 +120,20 @@ export default function Prayer() {
               flexDirection: "row",
             }}
           >
-            <View
+            <Image
+              source={prayer.image}
               style={{
-                borderRadius: 15,
-                margin: 5,
+                alignItems: "center",
+                justifyContent: "center",
+                height: "auto",
+                width: "auto",
+                resizeMode: "cover",
+                borderRadius: 6,
+                margin: 6,
                 flex: 1,
-                backgroundColor: theme.cardAlt,
+                opacity: 0.7,
               }}
-            >
-              <Image
-                source={require("@/src/assets/images/Group 8-1.png")}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 15,
-                }}
-                resizeMode="cover"
-              ></Image>
-            </View>
+            ></Image>
             <View
               style={{
                 alignItems: "flex-end",

@@ -1,5 +1,5 @@
 import PrayersScreen from "@/src/screens/Prayers/PrayersScreen";
 
-export default function Prayers() {
+export default function Page() {
   return <PrayersScreen />;
 }
