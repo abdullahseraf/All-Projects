@@ -1,14 +1,33 @@
-import { typography } from "@/src/theme/typography";
 import { useTheme } from "@/src/theme/ThemeContext";
+import { typography } from "@/src/theme/typography";
 import { useFonts } from "expo-font";
-import { Pressable, ScrollView, StatusBar, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Image } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Pressable, ScrollView, Text, View, Image } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function Prayer() {
-  const { theme } = useTheme();
+export default function Index() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const [fontsLoaded] = useFonts({
+    ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
+    ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
+    ElMessiriSemiBold: require("@/src/assets/fonts/ElMessiri-SemiBold.ttf"),
+    ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
+    ReadexProRegular: require("@/src/assets/fonts/ReadexPro-Regular.ttf"),
+    ReadexProMedium: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
+    ReadexProSemiBold: require("@/src/assets/fonts/ReadexPro-SemiBold.ttf"),
+    ReadexProBold: require("@/src/assets/fonts/ReadexPro-Bold.ttf"),
+    AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Loading fonts...</Text>
+      </View>
+    );
+  }
 
   const prayer = [
     {
@@ -43,25 +62,6 @@ export default function Prayer() {
     },
   ];
 
-  const [fontsLoaded] = useFonts({
-    ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
-    ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
-    ElMessiriSemiBold: require("@/src/assets/fonts/ElMessiri-SemiBold.ttf"),
-    ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
-    ReadexProRegular: require("@/src/assets/fonts/ReadexPro-Regular.ttf"),
-    ReadexProMedium: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
-    ReadexProSemiBold: require("@/src/assets/fonts/ReadexPro-SemiBold.ttf"),
-    ReadexProBold: require("@/src/assets/fonts/ReadexPro-Bold.ttf"),
-    AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
-  });
-
-  if (!fontsLoaded)
-    return (
-      <View>
-        <Text>Loading fonts...</Text>
-      </View>
-    );
-
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.background }}
@@ -69,10 +69,11 @@ export default function Prayer() {
         paddingBottom: 15,
         flexGrow: 1,
       }}
+      removeClippedSubviews={false}
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
     >
-      <StatusBar barStyle="light-content" backgroundColor={theme.Header} />
+      <StatusBar style="light" backgroundColor={theme.Header} />
 
       {/* Header */}
       <View
@@ -111,7 +112,7 @@ export default function Prayer() {
           }}
         >
           <Pressable
-            onPress={() => router.push(`../tabs/prayers/${prayer.route}`)}
+            onPress={() => router.navigate(`../tabs/prayers/${prayer.route}`)}
             style={{
               backgroundColor: theme.card,
               borderRadius: 15,
@@ -128,7 +129,7 @@ export default function Prayer() {
                 height: "auto",
                 width: "auto",
                 resizeMode: "cover",
-                borderRadius: 6,
+                borderRadius: 8,
                 margin: 6,
                 flex: 1,
                 opacity: 0.7,

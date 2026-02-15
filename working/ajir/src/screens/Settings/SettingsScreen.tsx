@@ -131,7 +131,7 @@ export default function SettingsScreen() {
               borderRadius: 5,
               borderWidth: 1,
               borderColor: theme.cText,
-              marginLeft: 25,
+              marginLeft: 20,
               justifyContent: "center",
             }}
           >
@@ -159,7 +159,7 @@ export default function SettingsScreen() {
               {
                 color: theme.cTitle,
                 fontSize: 16,
-                marginRight: 25,
+                marginRight: 20,
               },
             ]}
           >
@@ -185,7 +185,7 @@ export default function SettingsScreen() {
               borderRadius: 5,
               borderWidth: 1,
               borderColor: theme.cText,
-              marginLeft: 25,
+              marginLeft: 20,
               justifyContent: "center",
             }}
           >
@@ -208,7 +208,7 @@ export default function SettingsScreen() {
               {
                 color: theme.cTitle,
                 fontSize: 16,
-                marginRight: 25,
+                marginRight: 20,
               },
             ]}
           >

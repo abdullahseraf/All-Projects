@@ -1,56 +1,129 @@
 import { View, Text, ImageBackground, Pressable } from "react-native";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/src/theme/ThemeContext";
+import { typography } from "@/src/theme/typography";
+import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
 
 export default function WelcomeScreen() {
+  const { theme } = useTheme();
   const router = useRouter();
+
+  const [fontsLoaded] = useFonts({
+    ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
+    ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
+    ElMessiriSemiBold: require("@/src/assets/fonts/ElMessiri-SemiBold.ttf"),
+    ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
+    ReadexProRegular: require("@/src/assets/fonts/ReadexPro-Regular.ttf"),
+    ReadexProMedium: require("@/src/assets/fonts/ReadexPro-Medium.ttf"),
+    ReadexProSemiBold: require("@/src/assets/fonts/ReadexPro-SemiBold.ttf"),
+    ReadexProBold: require("@/src/assets/fonts/ReadexPro-Bold.ttf"),
+    AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Loading fonts...</Text>
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
-      source={require("..")}
+      source={require("@/src/assets/images/quran.png")}
       style={{ flex: 1 }}
       resizeMode="cover"
     >
+      <StatusBar style="light" backgroundColor="" />
       <View
         style={{
           flex: 1,
           justifyContent: "flex-end",
-          padding: 30,
-          backgroundColor: "rgba(0,0,0,0.45)",
+          paddingHorizontal: 20,
+          paddingVertical: 40,
+          backgroundColor: "rgba(0,0,0,0.30)",
         }}
       >
         <Text
-          style={{
-            color: "white",
-            fontSize: 26,
-            textAlign: "center",
-            marginBottom: 10,
-          }}
+          style={[
+            typography.readexproSemiBold,
+            {
+              color: theme.cTitle,
+              fontSize: 32,
+              textAlign: "right",
+              marginBottom: 10,
+            },
+          ]}
         >
-          تتبع صلواتك يومياً
+          مرحباً بك في تطبيق
+          <Text
+            style={[
+              typography.elmessiriBold,
+              {
+                color: theme.cTitle,
+                fontSize: 32,
+              },
+            ]}
+          >
+            <Text style={{ color: theme.logoA }}> أ</Text>
+            جر
+          </Text>
         </Text>
 
         <Text
           style={{
-            color: "#ddd",
-            fontSize: 16,
-            textAlign: "center",
+            color: theme.İnputB,
+            fontSize: 18,
+            textAlign: "right",
             marginBottom: 40,
           }}
         >
-          وارتقِ أكثر كل يوم
+          ذكر نفسك… وارتقِ بروحك
         </Text>
-
-        <Pressable
-          onPress={() => router.replace("/tabs")}
+        <View
           style={{
-            backgroundColor: "#0D1B2A",
-            padding: 16,
-            borderRadius: 14,
+            width: "100%",
+            paddingHorizontal: 2,
+            paddingBottom: 20,
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{
+              width: "47%",
+              backgroundColor: theme.card,
+              height: 4,
+              borderRadius: 5,
+            }}
+          ></View>
+          <View
+            style={{
+              width: "47%",
+              backgroundColor: theme.card,
+              height: 4,
+              borderRadius: 5,
+            }}
+          ></View>
+        </View>
+        <Pressable
+          onPress={() => router.navigate("/tabs")}
+          style={{
+            backgroundColor: theme.İntrotB,
+            padding: 14,
+            borderRadius: 8,
             alignItems: "center",
           }}
         >
-          <Text style={{ color: "white", fontSize: 16 }}>
-            البدء الآن
+          <Text
+            style={[
+              typography.readexproMedium,
+              { color: theme.cTitle, fontSize: 14 },
+            ]}
+          >
+            البدء الان
           </Text>
         </Pressable>
       </View>

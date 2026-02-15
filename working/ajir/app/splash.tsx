@@ -4,25 +4,26 @@ import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "@/src/theme/ThemeContext";
 import { typography } from "@/src/theme/typography";
+import { StatusBar } from "expo-status-bar";
 
 export default function Splash() {
   const { theme } = useTheme();
   const router = useRouter();
-  const scale = useRef(new Animated.Value(2)).current; // كبير بالبداية
+  const scale = useRef(new Animated.Value(3)).current; // كبير بالبداية
 
   useEffect(() => {
     Animated.timing(scale, {
       toValue: 1, // يصغر مباشرة
-      duration: 800,
+      duration: 1000,
       useNativeDriver: true,
     }).start(async () => {
       const firstTime = await AsyncStorage.getItem("firstTime");
 
       if (firstTime === null) {
         await AsyncStorage.setItem("firstTime", "false");
-        router.replace("/Onboarding/IntroScreen");
+        router.push("/Onboarding/IntroScreen");
       } else {
-        router.replace("/Onboarding/IntroScreen");
+        router.push("/Onboarding/IntroScreen");
       }
     });
   }, []);
@@ -36,6 +37,7 @@ export default function Splash() {
         alignItems: "center",
       }}
     >
+      <StatusBar style="auto" backgroundColor={theme.background} />
       <Animated.Text
         style={[
           typography.elmessiriBold,
@@ -46,8 +48,8 @@ export default function Splash() {
           },
         ]}
       >
-        <View>أ</View>
-          جر
+        <Animated.Text style={{ color: theme.logoA }}>أ</Animated.Text>
+        جر
       </Animated.Text>
     </View>
   );

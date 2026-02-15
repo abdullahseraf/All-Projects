@@ -4,19 +4,20 @@
     "slug": "ajir",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/Group 8-1.png",
+    "icon": "./src/assets/images/Group8-1.png",
     "scheme": "ajir",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "userInterfaceStyle": "automatic",
+      "backgroundColor": "#0F172A",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/Group 8-1.png",
-        "backgroundImage": "./src/assets/images/Group 8-1.png",
-        "monochromeImage": "./src/assets/images/Group 8-1.png"
+        "foregroundImage": "./src/assets/images/Group8-1.png",
+        "backgroundImage": "./src/assets/images/Group8-1.png",
+        "monochromeImage": "./src/assets/images/Group8-1.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -24,7 +25,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./src/assets/images/Group 8-1.png"
+      "favicon": "./src/assets/images/Group8-1.png"
     },
     "plugins": [
       "expo-router",
@@ -36,7 +37,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "backgroundColor": "0F172A"
+            "backgroundColor": "#0F172A"
           }
         }
       ],

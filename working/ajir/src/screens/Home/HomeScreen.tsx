@@ -4,10 +4,13 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useState } from "react";
+import { useRouter } from "expo-router";;
+
 
 export default function Index() {
   const { theme } = useTheme();
   const [clicks, setClicks] = useState(0);
+  const router = useRouter();
 
   const prayers = [
     { name: "العشاء", time: "4 : 05" },
@@ -49,7 +52,7 @@ export default function Index() {
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={{
-        flexGrow: 1, // 🔥 مهم جداً
+        flexGrow: 1,
       }}
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
@@ -95,15 +98,18 @@ export default function Index() {
             flexDirection: "row",
           }}
         >
-          <Text
-            style={[
-              typography.readexproMedium,
-              { fontSize: 11, color: theme.İnputB },
-            ]}
+          <Pressable
+            onPress={() => router.navigate("/tabs/prayers")}
           >
-            لرؤية المزيد
-          </Text>
-
+            <Text
+              style={[
+                typography.readexproMedium,
+                { fontSize: 11, color: theme.İnputB },
+              ]}
+            >
+              لرؤية المزيد
+            </Text>
+          </Pressable>
           <Text
             style={[
               typography.elmessiriBold,
@@ -187,6 +193,7 @@ export default function Index() {
         <View
           style={{
             width: "100%",
+            height: "auto",
             alignItems: "center",
             paddingHorizontal: 15,
             marginTop: 15,
@@ -194,7 +201,7 @@ export default function Index() {
         >
           <View
             style={{
-              height: 180,
+              height: "auto",
               width: "100%",
               backgroundColor: theme.card,
               borderRadius: 15,
@@ -203,9 +210,11 @@ export default function Index() {
           >
             <View
               style={{
+                height: "auto",
                 alignItems: "flex-end",
                 marginBottom: 6,
                 marginRight: 15,
+                marginTop: 6,
               }}
             >
               <Text
@@ -221,7 +230,7 @@ export default function Index() {
             <View
               style={{
                 width: "100%",
-                height: 135,
+                height:  "auto",
                 backgroundColor: theme.cardAlt,
                 borderRadius: 15,
                 alignItems: "flex-end",
@@ -248,6 +257,7 @@ export default function Index() {
                     paddingTop: 8,
                     paddingLeft: 20,
                     lineHeight: 30,
+                    paddingBottom: 8,
                   },
                 ]}
               >
@@ -263,9 +273,9 @@ export default function Index() {
       {/* 🔥 aded Card —*/}
       <View
         style={{
-          flex: 1,
-          padding: 15,
+          margin: 15,
           flexDirection: "row",
+          flex: 1,
         }}
       >
         <View
@@ -337,7 +347,7 @@ export default function Index() {
                 },
               ]}
             >
-               العدد : 
+              العدد :
               <Text
                 style={[
                   typography.readexproSemiBold,
@@ -346,7 +356,7 @@ export default function Index() {
                   },
                 ]}
               >
-                {" "+clicks}
+                {" " + clicks}
               </Text>
             </Text>
             <View>
