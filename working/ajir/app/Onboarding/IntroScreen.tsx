@@ -41,7 +41,7 @@ export default function IntroScreen() {
           flex: 1,
           justifyContent: "flex-end",
           paddingHorizontal: 20,
-          paddingVertical: 40,
+          paddingVertical: 30,
           backgroundColor: "rgba(0,0,0,0.20)",
         }}
       >
@@ -109,7 +109,7 @@ export default function IntroScreen() {
           ></View>
         </View>
         <Pressable
-          onPress={() => router.navigate("/Onboarding/WelcomeScreen")}
+          onPress={() => router.replace("/Onboarding/WelcomeScreen")}
           style={{
             backgroundColor: theme.İntrotB,
             padding: 14,
@@ -117,7 +117,14 @@ export default function IntroScreen() {
             alignItems: "center",
           }}
         >
-          <Text style={[typography.readexproMedium,{ color: theme.cTitle, fontSize: 14 }]}>التالي</Text>
+          <Text
+            style={[
+              typography.readexproMedium,
+              { color: theme.cTitle, fontSize: 14 },
+            ]}
+          >
+            التالي
+          </Text>
         </Pressable>
       </View>
     </ImageBackground>

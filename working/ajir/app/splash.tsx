@@ -13,20 +13,25 @@ export default function Splash() {
 
   useEffect(() => {
     Animated.timing(scale, {
-      toValue: 1, // يصغر مباشرة
+      toValue: 1,
       duration: 1000,
       useNativeDriver: true,
-    }).start(async () => {
-      const firstTime = await AsyncStorage.getItem("firstTime");
-
-      if (firstTime === null) {
-        await AsyncStorage.setItem("firstTime", "false");
-        router.push("/Onboarding/IntroScreen");
-      } else {
-        router.push("/Onboarding/IntroScreen");
-      }
+    }).start(() => {
+      checkFirstTime();
     });
   }, []);
+
+  const checkFirstTime = async () => {
+    await AsyncStorage.clear();
+
+    const completed = await AsyncStorage.getItem("onboardingCompleted");
+
+    if (completed === "true") {
+      router.replace("/tabs");
+    } else {
+      router.replace("/Onboarding/IntroScreen");
+    }
+  };
 
   return (
     <View

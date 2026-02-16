@@ -4,13 +4,14 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useState } from "react";
-import { useRouter } from "expo-router";;
-
+import { useRouter } from "expo-router";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function Index() {
   const { theme } = useTheme();
   const [clicks, setClicks] = useState(0);
   const router = useRouter();
+  const Stack = createNativeStackNavigator();
 
   const prayers = [
     { name: "العشاء", time: "4 : 05" },
@@ -98,9 +99,7 @@ export default function Index() {
             flexDirection: "row",
           }}
         >
-          <Pressable
-            onPress={() => router.navigate("/tabs/prayers")}
-          >
+          <Pressable onPress={() => router.navigate("/tabs/prayers")}>
             <Text
               style={[
                 typography.readexproMedium,
@@ -121,73 +120,67 @@ export default function Index() {
         </View>
 
         {/* Prayer Cards */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          overScrollMode="never"
-          contentContainerStyle={{
-            paddingHorizontal: 15,
-            gap: 15,
+        <View
+          style={{
+            marginHorizontal: 15,
           }}
         >
-          {prayers.map((prayer, index) => (
+          <View
+            style={{
+              backgroundColor: theme.card,
+              borderRadius: 15,
+            }}
+          >
+            <Text
+              style={[
+                typography.elmessiriSemiBold,
+                {
+                  marginBottom: 2,
+                  marginRight: 15,
+                  marginTop: 6,
+                  color: theme.cTitle,
+                  textAlign: "right",
+                },
+              ]}
+            >
+              الصلاة القادمة
+            </Text>
             <View
-              key={index}
               style={{
-                height: 100,
-                width: 150,
                 backgroundColor: theme.cardAlt,
-                borderRadius: 12,
+                borderRadius: 15,
+                alignItems: "flex-end",
+                paddingRight: 20,
               }}
             >
-              <View
-                style={{
-                  height: 35,
-                  backgroundColor: theme.card,
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+              <Text
+                style={[
+                  typography.elmessiriBold,
+                  { fontSize: 22, color: theme.cText, marginTop: 8 },
+                ]}
               >
-                <Text
-                  style={[
-                    typography.elmessiriMedium,
-                    { fontSize: 14, color: theme.cTitle },
-                  ]}
-                >
-                  {prayer.name}
-                </Text>
-              </View>
+                {}العشاء
+              </Text>
 
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+              <Text
+                style={[
+                  typography.readexproMedium,
+                  {
+                    color: theme.cParagraph,
+                    fontSize: 15,
+                    textAlign: "right",
+                    paddingTop: 0,
+                    paddingLeft: 20,
+                    lineHeight: 30,
+                    paddingBottom: 2,
+                  },
+                ]}
               >
-                <Text
-                  style={[
-                    typography.elmessiriSemiBold,
-                    { fontSize: 16, color: theme.cText },
-                  ]}
-                >
-                  موعد الصلاة
-                </Text>
-
-                <Text
-                  style={[
-                    typography.readexproMedium,
-                    { fontSize: 16, color: theme.cTitle },
-                  ]}
-                >
-                  {prayer.time}
-                </Text>
-              </View>
+                {}20 دقيقة 5 ساعات
+              </Text>
             </View>
-          ))}
-        </ScrollView>
+          </View>
+        </View>
 
         {/* Sunnah Card */}
         <View
@@ -212,9 +205,9 @@ export default function Index() {
               style={{
                 height: "auto",
                 alignItems: "flex-end",
-                marginBottom: 6,
+                marginBottom: 2,
                 marginRight: 15,
-                marginTop: 6,
+                marginTop: 2,
               }}
             >
               <Text
@@ -230,11 +223,11 @@ export default function Index() {
             <View
               style={{
                 width: "100%",
-                height:  "auto",
+                height: "auto",
                 backgroundColor: theme.cardAlt,
                 borderRadius: 15,
                 alignItems: "flex-end",
-                paddingTop: 15,
+                paddingTop: 10,
                 paddingRight: 20,
               }}
             >
@@ -254,10 +247,10 @@ export default function Index() {
                     color: theme.cParagraph,
                     fontSize: 15,
                     textAlign: "right",
-                    paddingTop: 8,
+                    paddingTop: 4,
                     paddingLeft: 20,
                     lineHeight: 30,
-                    paddingBottom: 8,
+                    paddingBottom: 4,
                   },
                 ]}
               >
@@ -292,7 +285,7 @@ export default function Index() {
               backgroundColor: theme.cardAlt,
               borderRadius: 15,
               width: "45%",
-              paddingVertical: 15,
+              paddingVertical: 10,
               paddingHorizontal: 25,
               alignItems: "flex-end",
               justifyContent: "center",

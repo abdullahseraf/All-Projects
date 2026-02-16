@@ -4,9 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@/src/theme/ThemeContext";
+import { Route } from "expo-router/build/Route";
+import { useRouter } from "expo-router";
 
 export default function SettingsScreen() {
   const { theme, isDark, toggleTheme } = useTheme();
+  const router = useRouter();
   const [fontsLoaded] = useFonts({
     ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
     ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
@@ -189,13 +192,64 @@ export default function SettingsScreen() {
               justifyContent: "center",
             }}
           >
+            <Pressable onPress={() => router.push("/Onboarding/location")}>
+              <Text
+                style={[
+                  typography.readexproRegular,
+                  {
+                    color: theme.cText,
+                    fontSize: 14,
+                    marginHorizontal: 10,
+                  },
+                ]}
+              >
+                ذهاب
+              </Text>
+            </Pressable>
+          </View>
+          <Text
+            style={[
+              typography.elmessiriRegular,
+              {
+                color: theme.cTitle,
+                fontSize: 16,
+                marginRight: 20,
+              },
+            ]}
+          >
+            إعادت تحديد الموقع
+          </Text>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            height: 60,
+            backgroundColor: theme.card,
+            borderRadius: 10,
+            marginBottom: 20,
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: theme.cardAlt,
+              height: 28,
+              borderRadius: 5,
+              borderWidth: 1,
+              borderColor: theme.cText,
+              marginLeft: 20,
+              justifyContent: "center",
+            }}
+          >
             <Text
               style={[
                 typography.readexproRegular,
                 {
                   color: theme.cText,
                   fontSize: 14,
-                  marginHorizontal: 10,
+                  marginHorizontal: 5,
                 },
               ]}
             >

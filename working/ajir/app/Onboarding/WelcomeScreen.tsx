@@ -41,7 +41,7 @@ export default function WelcomeScreen() {
           flex: 1,
           justifyContent: "flex-end",
           paddingHorizontal: 20,
-          paddingVertical: 40,
+          paddingVertical: 30,
           backgroundColor: "rgba(0,0,0,0.30)",
         }}
       >
@@ -109,7 +109,7 @@ export default function WelcomeScreen() {
           ></View>
         </View>
         <Pressable
-          onPress={() => router.navigate("/tabs")}
+          onPress={() => router.replace("/Onboarding/location")}
           style={{
             backgroundColor: theme.İntrotB,
             padding: 14,
@@ -123,7 +123,7 @@ export default function WelcomeScreen() {
               { color: theme.cTitle, fontSize: 14 },
             ]}
           >
-            البدء الان
+            البدء الآن
           </Text>
         </Pressable>
       </View>

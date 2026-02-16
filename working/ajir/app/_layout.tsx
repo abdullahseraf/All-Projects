@@ -4,7 +4,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <Stack screenOptions={{ animation: "none", headerShown: false }}>
-        <Stack.Screen name="splash" />{" "}
+        <Stack.Screen name="splash" />
       </Stack>
     </ThemeProvider>
   );
