@@ -1,107 +1,65 @@
+// src/services/storage.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// تعريف أنواع البيانات
-interface Location {
-  latitude: number;
-  longitude: number;
-}
-
-interface Prayer {
+export interface StoredPrayer {
   name: string;
   route: string;
   time: string;
 }
 
-// مفاتيح التخزين
-const KEYS = {
-  PRAYER_TIMES: 'prayer_times',
-  LOCATION: 'user_location',
-  LAST_FETCH: 'last_fetch_time',
-  CITY: 'city_name',
-};
+export interface StoredLocation {
+  latitude: number;
+  longitude: number;
+  city: string;
+}
 
 // حفظ أوقات الصلاة
-export const savePrayerTimes = async (prayers: Prayer[]): Promise<void> => {
+export const savePrayerTimes = async (prayers: StoredPrayer[]): Promise<void> => {
   try {
-    const prayersForStorage = prayers.map(p => ({
-      name: p.name,
-      route: p.route,
-      time: p.time,
-    }));
-    
-    await AsyncStorage.setItem(KEYS.PRAYER_TIMES, JSON.stringify(prayersForStorage));
-    await AsyncStorage.setItem(KEYS.LAST_FETCH, Date.now().toString());
-    console.log('✅ تم حفظ أوقات الصلاة');
+    await AsyncStorage.setItem('prayerTimes', JSON.stringify(prayers));
+    await AsyncStorage.setItem('lastUpdated', new Date().toISOString());
   } catch (error) {
-    console.log('❌ خطأ في حفظ أوقات الصلاة:', error);
+    console.error('خطأ في حفظ أوقات الصلاة:', error);
+  }
+};
+
+// جلب أوقات الصلاة المحفوظة
+export const getPrayerTimes = async (): Promise<StoredPrayer[] | null> => {
+  try {
+    const data = await AsyncStorage.getItem('prayerTimes');
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    console.error('خطأ في جلب أوقات الصلاة:', error);
+    return null;
   }
 };
 
 // حفظ الموقع
-export const saveLocation = async (latitude: number, longitude: number, city: string = ''): Promise<void> => {
+export const saveLocation = async (latitude: number, longitude: number, city: string): Promise<void> => {
   try {
-    await AsyncStorage.setItem(KEYS.LOCATION, JSON.stringify({ latitude, longitude }));
-    if (city) {
-      await AsyncStorage.setItem(KEYS.CITY, city);
-    }
-    console.log('✅ تم حفظ الموقع');
+    const location: StoredLocation = { latitude, longitude, city };
+    await AsyncStorage.setItem('userLocation', JSON.stringify(location));
   } catch (error) {
-    console.log('❌ خطأ في حفظ الموقع:', error);
+    console.error('خطأ في حفظ الموقع:', error);
   }
 };
 
-// جلب أوقات الصلاة
-export const getPrayerTimes = async (): Promise<Prayer[] | null> => {
+// جلب الموقع المحفوظ
+export const getLocation = async (): Promise<StoredLocation | null> => {
   try {
-    const data = await AsyncStorage.getItem(KEYS.PRAYER_TIMES);
+    const data = await AsyncStorage.getItem('userLocation');
     return data ? JSON.parse(data) : null;
   } catch (error) {
-    console.log('❌ خطأ في جلب أوقات الصلاة:', error);
+    console.error('خطأ في جلب الموقع:', error);
     return null;
-  }
+ }
 };
 
-// جلب الموقع
-export const getLocation = async (): Promise<Location | null> => {
+// جلب تاريخ آخر تحديث
+export const getLastUpdated = async (): Promise<string | null> => {
   try {
-    const data = await AsyncStorage.getItem(KEYS.LOCATION);
-    return data ? JSON.parse(data) : null;
-  } catch (error) {
-    console.log('❌ خطأ في جلب الموقع:', error);
-    return null;
-  }
-};
-
-// جلب اسم المدينة
-export const getCity = async (): Promise<string | null> => {
-  try {
-    return await AsyncStorage.getItem(KEYS.CITY);
+    return await AsyncStorage.getItem('lastUpdated');
   } catch (error) {
     return null;
-  }
-};
-
-// التحقق من وجود بيانات
-export const hasStoredData = async (): Promise<boolean> => {
-  try {
-    const prayers = await getPrayerTimes();
-    const location = await getLocation();
-    return !!(prayers && location);
-  } catch (error) {
-    return false;
-  }
-};
-
-// التحقق إذا كانت الأوقات حديثة (أقل من 24 ساعة)
-export const isDataFresh = async (): Promise<boolean> => {
-  try {
-    const lastFetch = await AsyncStorage.getItem(KEYS.LAST_FETCH);
-    if (!lastFetch) return false;
-    
-    const now = Date.now();
-    const twentyFourHours = 24 * 60 * 60 * 1000;
-    return (now - parseInt(lastFetch)) < twentyFourHours;
-  } catch (error) {
-    return false;
   }
 };

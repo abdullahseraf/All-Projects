@@ -2,23 +2,8 @@ import { useTheme } from "@/src/theme/ThemeContext";
 import { typography } from "@/src/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import { Tabs, useFocusEffect } from "expo-router";
-import { Text, View, Platform } from "react-native";
-import * as NavigationBar from 'expo-navigation-bar';
-import { useCallback } from 'react';
-
-// مكون مخصص لكل تبويب للتحكم بلون شريط التنقل
-function TabWithNavColor({ children, color }: { children: React.ReactNode, color: string }) {
-  useFocusEffect(
-    useCallback(() => {
-      if (Platform.OS === 'android') {
-        NavigationBar.setBackgroundColorAsync(color);
-      }
-    }, [color])
-  );
-  
-  return children;
-}
+import { Tabs } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
@@ -72,7 +57,7 @@ export default function TabsLayout() {
         animation: "none",
         tabBarStyle: {
           backgroundColor: theme.Header,
-          height: 85,
+          height: 90,
           paddingTop: 22,
           paddingBottom: 10,
           borderTopWidth: 1,
@@ -88,14 +73,6 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) =>
             renderTab("home", "home-outline", "الرئيسية", color, focused),
         }}
-        // يمكنك إضافة الألوان هنا أيضاً
-        listeners={{
-          focus: () => {
-            if (Platform.OS === 'android') {
-              NavigationBar.setBackgroundColorAsync(theme.Header);
-            }
-          },
-        }}
       />
 
       <Tabs.Screen
@@ -104,13 +81,6 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) =>
             renderTab("time", "time-outline", "الصلوات", color, focused),
         }}
-        listeners={{
-          focus: () => {
-            if (Platform.OS === 'android') {
-              NavigationBar.setBackgroundColorAsync("#4CAF50");
-            }
-          },
-        }}
       />
 
       <Tabs.Screen
@@ -118,13 +88,6 @@ export default function TabsLayout() {
         options={{
           tabBarIcon: ({ color, focused }) =>
             renderTab("book", "book-outline", "السنن", color, focused),
-        }}
-        listeners={{
-          focus: () => {
-            if (Platform.OS === 'android') {
-              NavigationBar.setBackgroundColorAsync("#FF9800");
-            }
-          },
         }}
       />
 
@@ -139,13 +102,6 @@ export default function TabsLayout() {
               color,
               focused,
             ),
-        }}
-        listeners={{
-          focus: () => {
-            if (Platform.OS === 'android') {
-              NavigationBar.setBackgroundColorAsync("#9C27B0");
-            }
-          },
         }}
       />
     </Tabs>

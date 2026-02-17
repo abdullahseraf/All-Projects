@@ -10,7 +10,7 @@ export default function PrayerDetails() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <StatusBar barStyle="light-content" backgroundColor={theme.Header} />
+      <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
 
       {/* Header */}
       <View
@@ -88,19 +88,11 @@ export default function PrayerDetails() {
               height: 55,
               borderRadius: 12,
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
               paddingHorizontal: 15,
             }}
           >
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 6,
-                backgroundColor: theme.cText,
-              }}
-            ></View>
             <Text
               style={[
                 typography.elmessiriBold,
@@ -143,19 +135,11 @@ export default function PrayerDetails() {
               height: 55,
               borderRadius: 12,
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
               paddingHorizontal: 15,
             }}
           >
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 6,
-                backgroundColor: theme.cText,
-              }}
-            ></View>
             <Text
               style={[
                 typography.elmessiriBold,
@@ -197,19 +181,11 @@ export default function PrayerDetails() {
               height: 55,
               borderRadius: 12,
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
               paddingHorizontal: 15,
             }}
           >
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 6,
-                backgroundColor: theme.cText,
-              }}
-            ></View>
             <Text
               style={[
                 typography.elmessiriBold,

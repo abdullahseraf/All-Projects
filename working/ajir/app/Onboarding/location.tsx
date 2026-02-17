@@ -7,6 +7,7 @@ import { typography } from "@/src/theme/typography";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { savePrayerTimes, saveLocation } from "@/src/services/storage";
+import { PrayerTimes, Coordinates, CalculationMethod, Madhab } from 'adhan';
 
 // تعريف نوع الصلاة
 interface Prayer {
@@ -21,27 +22,22 @@ export default function LocationScreen() {
   const [loading, setLoading] = useState<boolean>(false);
 
   // دالة تعديل الوقت مع تحديد الأنواع
-  const adjustTime = (timeString: string, minutesToAdd: number): string => {
-    if (!timeString) return "00:00";
+  const adjustTime = (date: Date, minutesToAdd: number): string => {
+    const adjustedDate = new Date(date.getTime() + minutesToAdd * 60000);
+    return adjustedDate.toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
 
-    let [hours, minutes] = timeString.split(":").map(Number);
-    minutes += minutesToAdd;
-
-    if (minutes >= 60) {
-      hours += Math.floor(minutes / 60);
-      minutes = minutes % 60;
-    } else if (minutes < 0) {
-      hours += Math.floor(minutes / 60);
-      minutes = 60 + (minutes % 60);
-    }
-
-    if (hours >= 24) {
-      hours = hours % 24;
-    } else if (hours < 0) {
-      hours = 24 + hours;
-    }
-
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  // دالة تحويل تنسيق الوقت
+  const formatTime = (date: Date): string => {
+    return date.toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
   };
 
   const handleLocation = async (): Promise<void> => {
@@ -77,63 +73,75 @@ export default function LocationScreen() {
       // حفظ الموقع
       await saveLocation(latitude, longitude, city);
 
-      // جلب أوقات الصلاة
-      const today = new Date();
-      const day = today.getDate();
-      const month = today.getMonth() + 1;
-      const year = today.getFullYear();
+      // حساب أوقات الصلاة باستخدام adhan
+      const coordinates = new Coordinates(latitude, longitude);
+      
+      // اختيار طريقة الحساب (method=4 في API كان يقصد به طريقة Umm Al-Qura)
+      // UmmAlQura تقابلها في adhan: CalculationMethod.UmmAlQura
+      const params = CalculationMethod.UmmAlQura();
+      
+      // تحديد المذهب (لحساب العصر)
+      params.madhab = Madhab.Shafi; // يمكن تغييره حسب الحاجة
 
-      const api = `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${latitude}&longitude=${longitude}&method=4`;
+      // التاريخ الحالي
+      const date = new Date();
+      
+      // حساب أوقات الصلاة
+      const prayerTimes = new PrayerTimes(coordinates, date, params);
 
-      const response = await fetch(api);
-      const data = await response.json();
+      // التعديلات الدقيقة (نفس القيم التي كنت تستخدمها)
+      const adjustments: Record<string, number> = {
+        Fajr: 0,
+        Dhuhr: 6,
+        Asr: 4,
+        Maghrib: 7,
+        Isha: -3,
+      };
 
-      if (data.code === 200) {
-        const timings = data.data.timings;
+      // تجهيز الصلوات مع التعديلات
+      const prayers: Prayer[] = [
+        {
+          name: "الفجر",
+          route: "fajir",
+          time: adjustTime(prayerTimes.fajr, adjustments.Fajr),
+        },
+        {
+          name: "الظهر",
+          route: "duhr",
+          time: adjustTime(prayerTimes.dhuhr, adjustments.Dhuhr),
+        },
+        {
+          name: "العصر",
+          route: "asr",
+          time: adjustTime(prayerTimes.asr, adjustments.Asr),
+        },
+        {
+          name: "المغرب",
+          route: "mugrb",
+          time: adjustTime(prayerTimes.maghrib, adjustments.Maghrib),
+        },
+        {
+          name: "العشاء",
+          route: "isa",
+          time: adjustTime(prayerTimes.isha, adjustments.Isha),
+        },
+      ];
 
-        // التعديلات الدقيقة
-        const adjustments: Record<string, number> = {
-          Fajr: 0,
-          Dhuhr: 6,
-          Asr: 4,
-          Maghrib: 7,
-          Isha: -3,
-        };
+      // عرض الأوقات في الكونسول للتحقق
+      console.log('الأوقات الأصلية:');
+      console.log('الفجر:', formatTime(prayerTimes.fajr));
+      console.log('الظهر:', formatTime(prayerTimes.dhuhr));
+      console.log('العصر:', formatTime(prayerTimes.asr));
+      console.log('المغرب:', formatTime(prayerTimes.maghrib));
+      console.log('العشاء:', formatTime(prayerTimes.isha));
+      
+      console.log('الأوقات بعد التعديلات:');
+      prayers.forEach(p => console.log(p.name, p.time));
 
-        // تجهيز الصلوات مع التعديلات
-        const prayers: Prayer[] = [
-          {
-            name: "الفجر",
-            route: "fajir",
-            time: adjustTime(timings.Fajr, adjustments.Fajr),
-          },
-          {
-            name: "الظهر",
-            route: "duhr",
-            time: adjustTime(timings.Dhuhr, adjustments.Dhuhr),
-          },
-          {
-            name: "العصر",
-            route: "asr",
-            time: adjustTime(timings.Asr, adjustments.Asr),
-          },
-          {
-            name: "المغرب",
-            route: "mugrb",
-            time: adjustTime(timings.Maghrib, adjustments.Maghrib),
-          },
-          {
-            name: "العشاء",
-            route: "isa",
-            time: adjustTime(timings.Isha, adjustments.Isha),
-          },
-        ];
+      // حفظ الأوقات
+      await savePrayerTimes(prayers);
 
-        // حفظ الأوقات
-        await savePrayerTimes(prayers);
-
-        router.push("/Onboarding/success");
-      }
+      router.push("/Onboarding/success");
     } catch (error) {
       console.log(error);
       alert("حدث خطأ أثناء تحديد الموقع");
@@ -162,7 +170,7 @@ export default function LocationScreen() {
           paddingTop: 40,
         }}
       >
-        <StatusBar style="light" backgroundColor={theme.background} />
+        <StatusBar style="light" backgroundColor={"#00000000"} />
 
         <Ionicons
           style={{ marginBottom: 20 }}

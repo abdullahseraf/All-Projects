@@ -4,6 +4,7 @@ import { useTheme } from "@/src/theme/ThemeContext";
 import { typography } from "@/src/theme/typography";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { SystemBars } from "react-native-edge-to-edge";
 
 export default function IntroScreen() {
   const { theme } = useTheme();
@@ -35,7 +36,7 @@ export default function IntroScreen() {
       style={{ flex: 1 }}
       resizeMode="cover"
     >
-      <StatusBar style="light" backgroundColor="" />
+      <StatusBar style="light" backgroundColor="#00000000" />
       <View
         style={{
           flex: 1,

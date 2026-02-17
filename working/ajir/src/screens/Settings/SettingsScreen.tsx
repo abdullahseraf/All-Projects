@@ -2,7 +2,7 @@ import { darkTheme } from "@/src/theme/dark";
 import { typography } from "@/src/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, StatusBar, Text, View } from "react-native";
 import { useTheme } from "@/src/theme/ThemeContext";
 import { Route } from "expo-router/build/Route";
 import { useRouter } from "expo-router";
@@ -38,6 +38,7 @@ export default function SettingsScreen() {
         backgroundColor: theme.background,
       }}
     >
+      <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
       <View
         style={{
           width: "100%",

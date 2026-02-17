@@ -33,7 +33,7 @@ export default function SuccessScreen() {
           paddingTop: 40,
         }}
       >
-        <StatusBar style="light" backgroundColor={theme.background} />
+        <StatusBar style="light" backgroundColor={"#00000000"} />
 
         {/* صورة (اختياري) */}
         <Image

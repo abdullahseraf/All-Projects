@@ -75,7 +75,7 @@ export default function SunanScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <StatusBar barStyle="light-content" backgroundColor={theme.Header} />
+      <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
 
       {/* Header */}
       <View

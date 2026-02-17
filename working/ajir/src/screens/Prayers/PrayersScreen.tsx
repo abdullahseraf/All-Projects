@@ -2,13 +2,28 @@ import { useTheme } from "@/src/theme/ThemeContext";
 import { typography } from "@/src/theme/typography";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, ScrollView, Text, View, Image } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { getPrayerTimes, StoredPrayer } from "@/src/services/storage"; // استيراد النوع
 
 export default function Index() {
   const router = useRouter();
   const { theme } = useTheme();
+
+  // ✅ تعريف نوع البيانات بشكل صحيح
+  const [prayers, setPrayers] = useState<StoredPrayer[]>([]); // تغيير هنا
+  const [loading, setLoading] = useState(true);
+
   const [fontsLoaded] = useFonts({
     ElMessiriRegular: require("@/src/assets/fonts/ElMessiri-Regular.ttf"),
     ElMessiriMedium: require("@/src/assets/fonts/ElMessiri-Medium.ttf"),
@@ -21,46 +36,85 @@ export default function Index() {
     AmiriQuran: require("@/src/assets/fonts/AmiriQuran-Regular.ttf"),
   });
 
-  if (!fontsLoaded) {
-    return (
-      <View>
-        <Text>Loading fonts...</Text>
-      </View>
-    );
-  }
+  // جلب البيانات المحفوظة
+  const loadSavedData = async () => {
+    try {
+      const savedPrayers = await getPrayerTimes();
 
-  const prayer = [
+      if (savedPrayers && savedPrayers.length > 0) {
+        setPrayers(savedPrayers); // ✅ الآن لا يوجد خطأ
+      } else {
+        console.log("لا توجد أوقات محفوظة");
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل البيانات:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // تحميل البيانات عند فتح الشاشة
+  useFocusEffect(
+    useCallback(() => {
+      loadSavedData();
+    }, []),
+  );
+
+  // صور الصلوات
+  const prayerImages = {
+    fajir: require("@/src/assets/images/fajir.png"),
+    duhr: require("@/src/assets/images/duhr.png"),
+    asr: require("@/src/assets/images/asr.png"),
+    mugrb: require("@/src/assets/images/mgrb.png"),
+    isa: require("@/src/assets/images/isa.png"),
+  };
+
+  // بيانات افتراضية (بنفس نوع StoredPrayer)
+  const defaultPrayers: StoredPrayer[] = [
     {
       name: "الفجر",
       route: "fajir",
-      time: "4 : 05",
-      image: require("@/src/assets/images/fajir.png"),
+      time: "4:05",
     },
     {
       name: "الظهر",
-      time: "4 : 05",
+      time: "4:05",
       route: "duhr",
-      image: require("@/src/assets/images/duhr.png"),
     },
     {
       name: "العصر",
-      time: "4 : 05",
+      time: "4:05",
       route: "asr",
-      image: require("@/src/assets/images/asr.png"),
     },
     {
       name: "المغرب",
-      time: "4 : 05",
+      time: "4:05",
       route: "mugrb",
-      image: require("@/src/assets/images/mgrb.png"),
     },
     {
       name: "العشاء",
-      time: "4 : 05",
+      time: "4:05",
       route: "isa",
-      image: require("@/src/assets/images/isa.png"),
     },
   ];
+
+  // استخدام البيانات المحفوظة أو الافتراضية
+  const displayPrayers = prayers.length > 0 ? prayers : defaultPrayers;
+
+  if (!fontsLoaded || loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: theme.background,
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.logoA} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -73,7 +127,7 @@ export default function Index() {
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
     >
-      <StatusBar style="light" backgroundColor={theme.Header} />
+      <StatusBar style="light" backgroundColor={"#00000000"} />
 
       {/* Header */}
       <View
@@ -100,8 +154,9 @@ export default function Index() {
           الصلوات
         </Text>
       </View>
-      {/* card */}
-      {prayer.map((prayer, index) => (
+
+      {/* cards */}
+      {displayPrayers.map((prayer, index) => (
         <View
           key={index}
           style={{
@@ -122,7 +177,10 @@ export default function Index() {
             }}
           >
             <Image
-              source={prayer.image}
+              source={
+                prayerImages[prayer.route as keyof typeof prayerImages] ||
+                prayerImages.fajir
+              }
               style={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -134,7 +192,7 @@ export default function Index() {
                 flex: 1,
                 opacity: 0.7,
               }}
-            ></Image>
+            />
             <View
               style={{
                 alignItems: "flex-end",

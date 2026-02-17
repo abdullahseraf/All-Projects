@@ -35,7 +35,7 @@ export default function WelcomeScreen() {
       style={{ flex: 1 }}
       resizeMode="cover"
     >
-      <StatusBar style="light" backgroundColor="" />
+      <StatusBar style="light" backgroundColor="#00000000" />
       <View
         style={{
           flex: 1,

@@ -22,8 +22,6 @@ export default function Splash() {
   }, []);
 
   const checkFirstTime = async () => {
-    await AsyncStorage.clear();
-
     const completed = await AsyncStorage.getItem("onboardingCompleted");
 
     if (completed === "true") {
