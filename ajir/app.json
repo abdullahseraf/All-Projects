@@ -12,11 +12,12 @@
       "supportsTablet": true
     },
     "android": {
+      "userInterfaceStyle": "automatic",
       "backgroundColor": "#0F172A",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/logo.png",
-        "backgroundImage": "./src/assets/images/logo.png",
-        "monochromeImage": "./src/assets/images/logo.png"
+        "backgroundColor": "#0F172A",
+        "backgroundImage": "./src/assets/images/logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -26,11 +27,7 @@
       "output": "static",
       "favicon": "./src/assets/images/logo.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font",
-      "react-native-edge-to-edge"
-    ],
+    "plugins": ["expo-router", "expo-font", "react-native-edge-to-edge"],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true

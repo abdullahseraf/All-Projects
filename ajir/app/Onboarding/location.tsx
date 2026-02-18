@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  ActivityIndicator,
-  Platform,
-} from "react-native";
+import { View, Text, Pressable, ActivityIndicator, Platform } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import * as Location from "expo-location";
@@ -16,23 +10,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { savePrayerTimes, saveLocation } from "@/src/services/storage";
 import { PrayerTimes, Coordinates, CalculationMethod, Madhab } from "adhan";
 
-// تعريف نوع الصلاة
 interface Prayer {
   name: string;
   route: string;
   time: string;
 }
-
-// ضبط التعامل مع الإشعارات أثناء فتح التطبيق
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true, // عرض التنبيه
-    shouldPlaySound: true, // تشغيل الصوت
-    shouldSetBadge: false, // تعديل رقم الشارة (iOS)
-    shouldShowBanner: true, // عرض Banner على iOS
-    shouldShowList: true, // عرض في Notification Center على iOS
-  }),
-});
 
 export default function LocationScreen() {
   const { theme } = useTheme();
@@ -48,64 +30,54 @@ export default function LocationScreen() {
     });
   };
 
-  const formatTime = (date: Date): string => {
-    return date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-  };
-
-  // دالة لإرسال إشعار عند وقت الصلاة
-  const schedulePrayerNotification = async (prayerName: string, date: Date) => {
-    const delayMs = date.getTime() - new Date().getTime();
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "حان وقت الصلاة",
-        body: `الآن وقت صلاة ${prayerName}`,
-        sound: true,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: Math.max(1, Math.floor(delayMs / 1000)),
-      },
-    });
-  };
-
   const handleLocation = async (): Promise<void> => {
     try {
       setLoading(true);
 
-      // طلب إذن الموقع
-      const { status: locationStatus } =
-        await Location.requestForegroundPermissionsAsync();
-      if (locationStatus !== "granted") {
+      // 1️⃣ طلب إذن الموقع
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
         alert("يرجى السماح بالوصول للموقع");
         setLoading(false);
         return;
       }
 
-      // طلب إذن الإشعارات
+      // 2️⃣ طلب إذن الإشعارات
       const { status: notifStatus } =
         await Notifications.requestPermissionsAsync();
+
       if (notifStatus !== "granted") {
-        alert("يرجى السماح بالإشعارات لتلقي تنبيهات الصلاة");
+        alert("يرجى السماح بالإشعارات ليصلك تنبيه وقت الصلاة");
       }
 
-      // جلب الموقع الحالي
+      // 3️⃣ إعداد قناة أندرويد
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("prayer-channel", {
+          name: "Prayer Notifications",
+          importance: Notifications.AndroidImportance.MAX,
+          sound: "default",
+        });
+      }
+
+      // 4️⃣ جلب الموقع
       const location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
 
-      // جلب اسم المدينة
-      let city = "";
+      let city: string = "";
+
       try {
         const geocode = await Location.reverseGeocodeAsync({
           latitude,
           longitude,
         });
+
         if (geocode.length > 0) {
           city =
-            geocode[0].city || geocode[0].region || geocode[0].country || "";
+            geocode[0].city ||
+            geocode[0].region ||
+            geocode[0].country ||
+            "";
         }
       } catch (error) {
         console.log("Geocode error:", error);
@@ -117,15 +89,16 @@ export default function LocationScreen() {
       const coordinates = new Coordinates(latitude, longitude);
       const params = CalculationMethod.UmmAlQura();
       params.madhab = Madhab.Shafi;
+
       const date = new Date();
       const prayerTimes = new PrayerTimes(coordinates, date, params);
 
       const adjustments: Record<string, number> = {
-        Fajr: 0,
+        Fajr: 1,
         Dhuhr: 6,
-        Asr: 4,
-        Maghrib: 7,
-        Isha: -3,
+        Asr: 5,
+        Maghrib: 8,
+        Isha: -2,
       };
 
       const prayers: Prayer[] = [
@@ -158,24 +131,10 @@ export default function LocationScreen() {
 
       await savePrayerTimes(prayers);
 
-      // جدولة الإشعار للصلاة القادمة فقط
-      const now = new Date();
-      for (let prayer of prayers) {
-        // تحويل الوقت إلى Date
-        const [hourStr, minStr] = prayer.time.split(":");
-        const prayerDate = new Date();
-        prayerDate.setHours(parseInt(hourStr), parseInt(minStr), 0, 0);
-        // إذا الوقت بعد الآن، نرسل إشعار
-        if (prayerDate > now) {
-          await schedulePrayerNotification(prayer.name, prayerDate);
-          break; // نرسل إشعار لصلاة واحدة فقط القادمة
-        }
-      }
-
       router.push("/Onboarding/success");
     } catch (error) {
       console.log(error);
-      alert("حدث خطأ أثناء تحديد الموقع أو الإشعار");
+      alert("حدث خطأ أثناء تحديد الموقع");
     } finally {
       setLoading(false);
     }
@@ -185,6 +144,7 @@ export default function LocationScreen() {
     <View
       style={{
         backgroundColor: theme.background,
+        flexDirection: "column",
         flex: 1,
         paddingHorizontal: 20,
         paddingVertical: 30,
@@ -200,12 +160,14 @@ export default function LocationScreen() {
         }}
       >
         <StatusBar style="light" backgroundColor={"#00000000"} />
+
         <Ionicons
           style={{ marginBottom: 20 }}
           size={100}
           color={theme.logoA}
           name="location-sharp"
         />
+
         <Text
           style={[
             typography.readexproSemiBold,
@@ -219,6 +181,7 @@ export default function LocationScreen() {
         >
           تحديد الموقع تلقائياً
         </Text>
+
         <Text
           style={{
             color: theme.İnputB,
@@ -230,30 +193,29 @@ export default function LocationScreen() {
           سنستخدم موقعك لحساب أوقات الصلاة بدقة
         </Text>
       </View>
-      <View>
-        <Pressable
-          onPress={handleLocation}
-          style={{
-            backgroundColor: theme.İntrotB,
-            paddingVertical: 16,
-            borderRadius: 10,
-            alignItems: "center",
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator color={theme.cTitle} />
-          ) : (
-            <Text
-              style={[
-                typography.readexproMedium,
-                { color: theme.cTitle, fontSize: 16 },
-              ]}
-            >
-              تحديد موقعي الآن
-            </Text>
-          )}
-        </Pressable>
-      </View>
+
+      <Pressable
+        onPress={handleLocation}
+        style={{
+          backgroundColor: theme.İntrotB,
+          paddingVertical: 16,
+          borderRadius: 10,
+          alignItems: "center",
+        }}
+      >
+        {loading ? (
+          <ActivityIndicator color={theme.cTitle} />
+        ) : (
+          <Text
+            style={[
+              typography.readexproMedium,
+              { color: theme.cTitle, fontSize: 16 },
+            ]}
+          >
+            تحديد موقعي الآن
+          </Text>
+        )}
+      </Pressable>
     </View>
   );
 }

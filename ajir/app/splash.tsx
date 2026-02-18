@@ -70,7 +70,7 @@ export default function Splash() {
         alignItems: "center",
       }}
     >
-      <StatusBar style="auto" backgroundColor={theme.background} />
+      <StatusBar style="light" backgroundColor={"#00000000"} />
       <Animated.Text
         style={[
           typography.elmessiriBold,

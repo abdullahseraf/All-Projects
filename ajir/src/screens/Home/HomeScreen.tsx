@@ -296,10 +296,7 @@ export default function Index() {
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
     >
-      <StatusBar
-        style="light"
-        backgroundColor={"#00000000"}
-      />
+      <StatusBar style="light" backgroundColor={"#00000000"} />
 
       {/* المحتوى العلوي */}
       <View>
@@ -422,7 +419,9 @@ export default function Index() {
                   },
                 ]}
               >
-                {nextPrayer.timeRemaining ? `متبقي : ${nextPrayer.timeRemaining} ` : "جاري الحساب..."}
+                {nextPrayer.timeRemaining
+                  ? `متبقي : ${nextPrayer.timeRemaining} `
+                  : "جاري الحساب..."}
               </Text>
 
               {/* وقت الصلاة بالضبط */}
