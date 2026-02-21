@@ -41,7 +41,7 @@ export default function Index() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const appState = useRef(AppState.currentState);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const Tasabih = [
     { name: "أَستغفرُ الله" },
@@ -228,7 +228,7 @@ export default function Index() {
 
       intervalRef.current = setInterval(() => {
         calculateNextPrayerFromSaved();
-      }, 1000) as unknown as NodeJS.Timeout; // كل ثانية
+      }, 1000); // كل ثانية
 
       return () => {
         if (intervalRef.current) {

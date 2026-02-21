@@ -17,25 +17,39 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/logo.png",
         "backgroundColor": "#0F172A",
-        "backgroundImage": "./src/assets/images/logo.png"
+        "backgroundImage": "./src/assets/images/logo.png",
+        "monochromeImage": "./src/assets/images/logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.ajir"
+      "package": "com.anonymous.ajir",
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.VIBRATE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
+      ]
     },
     "web": {
       "output": "static",
       "favicon": "./src/assets/images/logo.png"
     },
-    "plugins": ["expo-router", "expo-font", "react-native-edge-to-edge"],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "react-native-edge-to-edge",
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/images/logo.png",
+          "color": "#0F172A",
+          "sounds": []
+        }
+      ]
+    ],
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "fbc46d7e-9ced-4bdb-b411-5c9962ff4014"
+        "projectId": "c211cd93-dcd7-4a8a-bf01-734965cc1fd0"
       }
     },
     "owner": "abdullahseraf"

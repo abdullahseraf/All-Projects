@@ -1,4 +1,10 @@
-import { View, Text, Pressable, ActivityIndicator, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  ActivityIndicator,
+  Platform,
+} from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import * as Location from "expo-location";
@@ -15,6 +21,16 @@ interface Prayer {
   route: string;
   time: string;
 }
+// handler مرة وحدة
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function LocationScreen() {
   const { theme } = useTheme();
@@ -34,29 +50,32 @@ export default function LocationScreen() {
     try {
       setLoading(true);
 
-      // 1️⃣ طلب إذن الموقع
+      // 1️⃣ إذن الموقع
       const { status } = await Location.requestForegroundPermissionsAsync();
-
       if (status !== "granted") {
         alert("يرجى السماح بالوصول للموقع");
-        setLoading(false);
         return;
       }
 
-      // 2️⃣ طلب إذن الإشعارات
+      // 2️⃣ إذن الإشعارات
       const { status: notifStatus } =
         await Notifications.requestPermissionsAsync();
-
       if (notifStatus !== "granted") {
-        alert("يرجى السماح بالإشعارات ليصلك تنبيه وقت الصلاة");
+        alert("يرجى السماح بالإشعارات");
+        return;
       }
-
-      // 3️⃣ إعداد قناة أندرويد
+      // 3️⃣ إنشاء قناة أندرويد (مرة واحدة)
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("prayer-channel", {
           name: "Prayer Notifications",
           importance: Notifications.AndroidImportance.MAX,
           sound: "default",
+          vibrationPattern: [0, 250, 250, 250],
+          lockscreenVisibility:
+            Notifications.AndroidNotificationVisibility.PUBLIC,
+          enableVibrate: true,
+          enableLights: true,
+          lightColor: theme.background,
         });
       }
 
@@ -64,28 +83,9 @@ export default function LocationScreen() {
       const location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
 
-      let city: string = "";
+      await saveLocation(latitude, longitude, "");
 
-      try {
-        const geocode = await Location.reverseGeocodeAsync({
-          latitude,
-          longitude,
-        });
-
-        if (geocode.length > 0) {
-          city =
-            geocode[0].city ||
-            geocode[0].region ||
-            geocode[0].country ||
-            "";
-        }
-      } catch (error) {
-        console.log("Geocode error:", error);
-      }
-
-      await saveLocation(latitude, longitude, city);
-
-      // حساب أوقات الصلاة
+      // 5️⃣ حساب أوقات الصلاة
       const coordinates = new Coordinates(latitude, longitude);
       const params = CalculationMethod.UmmAlQura();
       params.madhab = Madhab.Shafi;
@@ -94,11 +94,11 @@ export default function LocationScreen() {
       const prayerTimes = new PrayerTimes(coordinates, date, params);
 
       const adjustments: Record<string, number> = {
-        Fajr: 1,
-        Dhuhr: 6,
-        Asr: 5,
-        Maghrib: 8,
-        Isha: -2,
+        Fajr:0,
+        Dhuhr: 5,
+        Asr: 4,
+        Maghrib: 7,
+        Isha: -3,
       };
 
       const prayers: Prayer[] = [
@@ -131,6 +131,45 @@ export default function LocationScreen() {
 
       await savePrayerTimes(prayers);
 
+      // 🔥 حذف الإشعارات القديمة بالكامل (حل مشكلة التكرار)
+      const existing = await Notifications.getAllScheduledNotificationsAsync();
+
+      for (const notification of existing) {
+        await Notifications.cancelScheduledNotificationAsync(
+          notification.identifier,
+        );
+      }
+
+      // 🔔 جدولة إشعارات يومية
+      for (const prayer of prayers) {
+        const [hour, minute] = prayer.time.split(":").map(Number);
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: `🕌 حان الآن وقت صلاة ${prayer.name}`,
+            body: "تقبل الله طاعتكم 🤍",
+            sound: "default",
+            priority: Notifications.AndroidNotificationPriority.MAX,
+            color: theme.background,
+            vibrate: [0, 300, 200, 300],
+            badge: 1,
+            data: {
+              screen: prayer.route,
+              prayerName: prayer.name,
+            },
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.DAILY,
+            hour,
+            minute,
+            // هنا تمرر القناة لأندرويد
+            channelId: "prayer-channel",
+          },
+        });
+      }
+
+      // تأكد أنه في 5 فقط
+      const all = await Notifications.getAllScheduledNotificationsAsync();
+
       router.push("/Onboarding/success");
     } catch (error) {
       console.log(error);
@@ -144,7 +183,6 @@ export default function LocationScreen() {
     <View
       style={{
         backgroundColor: theme.background,
-        flexDirection: "column",
         flex: 1,
         paddingHorizontal: 20,
         paddingVertical: 30,
@@ -187,10 +225,21 @@ export default function LocationScreen() {
             color: theme.İnputB,
             fontSize: 17,
             textAlign: "center",
-            marginBottom: 50,
+            marginBottom: 10,
           }}
         >
           سنستخدم موقعك لحساب أوقات الصلاة بدقة
+        </Text>
+
+        <Text
+          style={{
+            color: theme.İnputB,
+            fontSize: 17,
+            textAlign: "center",
+            marginBottom: 50,
+          }}
+        >
+          سنستخدم الإشعارات لتذكيرك بأوقات الصلاة
         </Text>
       </View>
 

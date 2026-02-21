@@ -4,14 +4,25 @@ import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
 import { Text, View } from "react-native";
+import * as Notifications from "expo-notifications";
+import { useEffect } from "react";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
 
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
   const [fontsLoaded] = useFonts({
     ElMessiriBold: require("@/src/assets/fonts/ElMessiri-Bold.ttf"),
   });
-  
+
   if (!fontsLoaded) return null;
 
   const renderTab = (
